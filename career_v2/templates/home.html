@@ -1,0 +1,112 @@
+<!-- Prompt: Create a landing page with a dark hero section, live example result
+     showing sample job matches, job categories section with icons, how it works
+     section with 3 steps and a call to action. Use gradient backgrounds. -->
+{% extends "base.html" %}
+{% block title %}CareerAI — Find Your Dream Job{% endblock %}
+{% block content %}
+<section style="background:linear-gradient(135deg,#0f172a,#1e1b4b,#0f172a);min-height:88vh;display:flex;align-items:center;position:relative;overflow:hidden;">
+  <div style="position:absolute;top:10%;left:5%;width:300px;height:300px;border-radius:50%;background:rgba(79,70,229,.15);filter:blur(60px);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:10%;right:5%;width:250px;height:250px;border-radius:50%;background:rgba(6,182,212,.1);filter:blur(60px);pointer-events:none;"></div>
+  <div class="container py-5">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 fu">
+        <span class="badge rounded-pill px-3 py-2 mb-3" style="background:rgba(79,70,229,.2);color:#818cf8;border:1px solid rgba(79,70,229,.3);">
+          <i class="bi bi-database-fill me-1"></i> {{ total_jobs }}+ Jobs in Database — No API Needed!
+        </span>
+        <h1 style="font-size:3rem;font-weight:800;color:#fff;line-height:1.15;">
+          Enter Your Skills — Get <span style="color:#818cf8;">Matching Jobs</span> Instantly!
+        </h1>
+        <p style="color:rgba(255,255,255,.75);font-size:1.1rem;margin:1.5rem 0 2rem;line-height:1.7;">
+          No API key needed! Our smart skill matching system finds the best jobs for you from our database of {{ total_jobs }}+ real job roles with salary, companies, roadmap and free learning resources.
+        </p>
+        <div class="d-flex gap-3 flex-wrap mb-4">
+          {% if session.email %}
+            <a href="{{ url_for('find_jobs') }}" class="btn btn-main btn-lg rounded-pill px-5"><i class="bi bi-search me-2"></i>Find My Jobs Now</a>
+            <a href="{{ url_for('browse') }}" class="btn btn-outline-light btn-lg rounded-pill px-4"><i class="bi bi-grid me-2"></i>Browse All Jobs</a>
+          {% else %}
+            <a href="{{ url_for('register') }}" class="btn btn-main btn-lg rounded-pill px-5"><i class="bi bi-person-plus me-2"></i>Get Started Free</a>
+            <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg rounded-pill px-4"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a>
+          {% endif %}
+        </div>
+        <div class="d-flex gap-4">
+          {% for n, l in [('50+','Jobs in Database'),('15+','Categories'),(total_jobs|string,'Skills Matched')] %}
+          <div class="text-center">
+            <div style="font-size:1.5rem;font-weight:800;color:#818cf8;font-family:Outfit,sans-serif;">{{ n }}</div>
+            <div style="color:rgba(255,255,255,.6);font-size:.78rem;">{{ l }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-lg-6 fu2">
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:1.5rem;">
+          <div style="color:rgba(255,255,255,.5);font-size:.78rem;margin-bottom:1rem;">⚡ Live Example Result</div>
+          <div style="color:rgba(255,255,255,.85);font-size:.88rem;line-height:2.2;">
+            <div>💻 <strong style="color:#818cf8;">Skills Entered:</strong> Python, HTML, CSS</div>
+            <hr style="border-color:rgba(255,255,255,.1);margin:.5rem 0;">
+            <div style="color:#34d399;font-weight:700;">✅ 4 Jobs Found:</div>
+            <div style="padding-left:1rem;">🏆 Python Developer — ₹3.5-8 LPA (95% match)</div>
+            <div style="padding-left:1rem;">🌐 Web Developer — ₹3-9 LPA (88% match)</div>
+            <div style="padding-left:1rem;">📊 Data Analyst — ₹4-10 LPA (72% match)</div>
+            <div style="padding-left:1rem;">⚙️ Django Developer — ₹4-10 LPA (68% match)</div>
+            <hr style="border-color:rgba(255,255,255,.1);margin:.5rem 0;">
+            <div>📚 <strong style="color:#fbbf24;">Learn Next:</strong> Django, SQL, JavaScript</div>
+            <div>🗺️ <strong style="color:#22d3ee;">Roadmap:</strong> Week by week plan included</div>
+            <div>🔗 <strong style="color:#f87171;">Free Resources:</strong> YouTube, Docs, Kaggle</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 style="font-weight:800;">Job Categories We Cover</h2>
+      <p style="color:var(--muted);">{{ total_jobs }}+ job roles across all major tech domains</p>
+    </div>
+    <div class="row g-3">
+      {% for cat, icon, color in [
+        ('Software Development','bi-code-slash','#4f46e5'),
+        ('Web Development','bi-globe','#06b6d4'),
+        ('Data & Analytics','bi-bar-chart','#10b981'),
+        ('Data & AI','bi-cpu','#8b5cf6'),
+        ('Cloud & DevOps','bi-cloud','#f59e0b'),
+        ('Design','bi-palette','#ec4899'),
+        ('Cybersecurity','bi-shield','#ef4444'),
+        ('Testing & QA','bi-bug','#14b8a6'),
+        ('Marketing','bi-megaphone','#f97316'),
+        ('Mobile Development','bi-phone','#3b82f6'),
+        ('Database','bi-database','#84cc16'),
+        ('Networking','bi-diagram-3','#a855f7')
+      ] %}
+      <div class="col-6 col-md-4 col-lg-3">
+        <a href="{{ url_for('browse', category=cat) }}" class="text-decoration-none">
+          <div class="card p-3 text-center h-100">
+            <div class="mx-auto mb-2" style="width:48px;height:48px;border-radius:12px;background:{{ color }}18;display:flex;align-items:center;justify-content:center;">
+              <i class="bi {{ icon }}" style="font-size:1.5rem;color:{{ color }};"></i>
+            </div>
+            <div class="fw-semibold" style="font-size:.88rem;">{{ cat }}</div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-5" style="background:var(--bg2);">
+  <div class="container text-center">
+    <div class="card p-5 mx-auto" style="max-width:600px;background:linear-gradient(135deg,#4f46e5,#3730a3);border:none;color:#fff;">
+      <i class="bi bi-rocket" style="font-size:3rem;color:#c7d2fe;"></i>
+      <h3 class="mt-3 fw-bold">Start Your Career Journey!</h3>
+      <p style="opacity:.85;">Register free and find your perfect job match instantly — no API key, no payment!</p>
+      <a href="{{ url_for('register') }}" class="btn btn-light btn-lg rounded-pill px-5 mt-2 fw-bold" style="color:#4f46e5;">
+        <i class="bi bi-person-plus me-2"></i>Register Free Now
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

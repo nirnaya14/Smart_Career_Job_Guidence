@@ -1,0 +1,84 @@
+<!-- Prompt: Create a job detail page showing description, salary, required skills,
+     top companies, skills to learn next, week by week learning roadmap and free
+     learning resources with links to YouTube and documentation. -->
+{% extends "base.html" %}
+{% block title %}{{ job.title }} – CareerAI{% endblock %}
+{% block content %}
+<div class="page-hero">
+  <div class="container">
+    <h1><i class="bi bi-briefcase me-2"></i>{{ job.title }}</h1>
+    <p>{{ job.category }} &nbsp;|&nbsp; {{ job.salary }} &nbsp;|&nbsp; {{ job.experience }}</p>
+  </div>
+</div>
+<div class="container pb-5">
+  <div class="row g-4">
+    <div class="col-lg-4">
+      <div class="card p-4 mb-4">
+        <h5 style="font-weight:700;"><i class="bi bi-info-circle me-2" style="color:var(--primary);"></i>Job Info</h5>
+        <p style="color:var(--muted);font-size:.9rem;">{{ job.description }}</p>
+        <div class="mb-3">
+          <div style="color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem;">Salary</div>
+          <div class="fw-bold" style="color:var(--success);font-size:1.1rem;"><i class="bi bi-currency-rupee"></i>{{ job.salary }}</div>
+        </div>
+        <div class="mb-3">
+          <div style="color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem;">Required Skills</div>
+          {% for s in job.skills_required %}<span class="skill-tag">{{ s }}</span>{% endfor %}
+        </div>
+        <div class="mb-3">
+          <div style="color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem;">Top Companies</div>
+          {% for c in job.companies %}<span class="badge me-1 mb-1" style="background:var(--bg);color:var(--text);border:1px solid var(--border);">{{ c }}</span>{% endfor %}
+        </div>
+      </div>
+      <div class="card p-4">
+        <h5 style="font-weight:700;"><i class="bi bi-graph-up me-2" style="color:var(--warning);"></i>Skills to Learn</h5>
+        {% for s in job.learn_next %}<span class="skill-tag" style="margin:.2rem;">{{ s }}</span>{% endfor %}
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <!-- Roadmap -->
+      <div class="card mb-4">
+        <div class="card-header border-0 pt-3 pb-0">
+          <h5 style="font-weight:700;margin:0;"><i class="bi bi-map me-2" style="color:var(--success);"></i>Learning Roadmap</h5>
+        </div>
+        <div class="card-body">
+          {% for step in job.roadmap %}
+          <div class="road-card">
+            <div class="d-flex align-items-start gap-3">
+              <div style="background:var(--success);color:#fff;border-radius:8px;padding:.3rem .7rem;font-size:.75rem;font-weight:700;white-space:nowrap;font-family:Outfit,sans-serif;">{{ step.week }}</div>
+              <div style="font-size:.9rem;">{{ step.task }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <!-- Resources -->
+      <div class="card">
+        <div class="card-header border-0 pt-3 pb-0">
+          <h5 style="font-weight:700;margin:0;"><i class="bi bi-book me-2" style="color:var(--accent);"></i>Free Learning Resources</h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            {% for res in job.resources %}
+            <div class="col-md-6">
+              <div class="res-card">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="fw-semibold" style="font-size:.9rem;">{{ res.topic }}</span>
+                  <span class="badge rounded-pill" style="background:{% if res.free %}#dcfce7;color:#166534{% else %}#fee2e2;color:#991b1b{% endif %}">{% if res.free %}Free{% else %}Paid{% endif %}</span>
+                </div>
+                <div style="color:var(--muted);font-size:.82rem;"><i class="bi bi-laptop me-1"></i>{{ res.platform }}</div>
+                <a href="{{ res.link }}" target="_blank" class="btn btn-sm rounded-pill mt-2" style="background:rgba(6,182,212,.1);color:var(--accent);border:1px solid rgba(6,182,212,.2);font-size:.78rem;">
+                  <i class="bi bi-box-arrow-up-right me-1"></i>Open Resource →
+                </a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center mt-4">
+    <a href="{{ url_for('find_jobs') }}" class="btn btn-main rounded-pill px-5"><i class="bi bi-search me-2"></i>Find More Jobs Matching My Skills</a>
+  </div>
+</div>
+{% endblock %}

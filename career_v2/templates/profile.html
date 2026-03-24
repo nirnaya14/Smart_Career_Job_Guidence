@@ -1,0 +1,55 @@
+<!-- Prompt: Create a profile edit page with fields for name, college, degree
+     dropdown and year dropdown. Email should be disabled. Save and cancel
+     buttons at the bottom. -->
+{% extends "base.html" %}
+{% block title %}Profile – CareerAI{% endblock %}
+{% block content %}
+<div class="page-hero">
+  <div class="container"><h1><i class="bi bi-person-circle me-2"></i>My Profile</h1><p>Update your details</p></div>
+</div>
+<div class="container pb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-5">
+      <div class="card p-4">
+        <h5 style="font-weight:700;margin-bottom:1.5rem;"><i class="bi bi-pencil me-2" style="color:var(--primary);"></i>Edit Profile</h5>
+        <form method="POST">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Full Name</label>
+            <input type="text" name="name" class="form-control form-control-lg" value="{{ user.name }}" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Email</label>
+            <input type="email" class="form-control" value="{{ user.email }}" disabled style="opacity:.6;">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">College Name</label>
+            <input type="text" name="college" class="form-control" value="{{ user.college or '' }}" placeholder="Your college">
+          </div>
+          <div class="row g-3 mb-4">
+            <div class="col">
+              <label class="form-label fw-semibold">Degree</label>
+              <select name="degree" class="form-select">
+                {% for d in ['B.Tech / B.E','BCA','B.Sc Computer Science','MCA','M.Tech','MBA','B.Com','Other'] %}
+                <option {% if user.degree==d %}selected{% endif %}>{{ d }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col">
+              <label class="form-label fw-semibold">Year</label>
+              <select name="year" class="form-select">
+                {% for y in ['1st Year','2nd Year','3rd Year','4th Year','Fresher / Graduate'] %}
+                <option {% if user.year==y %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-main btn-lg"><i class="bi bi-check2-circle me-2"></i>Save Changes</button>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary rounded-3">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
