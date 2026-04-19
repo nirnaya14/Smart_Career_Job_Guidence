@@ -5,7 +5,7 @@ A web-based application that helps users explore career paths, find jobs, and ma
 
 ## 🌐 Live Demo
 
-👉 https://smart-career-job-guidence.onrender.com
+👉 [https://smart-career-job-guidence.onrender.com](https://smart-career-job-guidence.onrender.com)
 
 ---
 
