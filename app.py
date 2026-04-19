@@ -6,7 +6,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from functools import wraps
 from storage import register_user, login_user, get_user, update_user, save_history, get_history
-from jobs_db import match_jobs, get_skill_gaps, get_all_categories, JOBS_DATABASE
+from carrier.jobs_db import match_jobs, get_skill_gaps, get_all_categories, JOBS_DATABASE
 
 app = Flask(__name__)
 app.secret_key = "career-ai-2024-secret"

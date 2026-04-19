@@ -1,0 +1,109 @@
+<!-- Prompt: Create a student dashboard with stat cards for total searches degree
+     and year, a find jobs call to action card, student profile info grid and a
+     recent searches table with skills, best job match and date. -->
+{% extends "base.html" %}
+{% block title %}Dashboard – CareerAI{% endblock %}
+{% block content %}
+<div class="page-hero">
+  <div class="container">
+    <h1><i class="bi bi-speedometer2 me-2"></i>My Dashboard</h1>
+    <p>Welcome back, <strong>{{ user.name }}</strong>! 👋 Ready to find your dream job?</p>
+  </div>
+</div>
+<div class="container pb-5">
+  <div class="row g-3 mb-4">
+    {% for val, label, icon, color in [
+      (total_searches,'Total Searches','search','#4f46e5'),
+      (user.degree or 'N/A','Degree','mortarboard','#10b981'),
+      (user.year or 'N/A','Year','calendar','#f59e0b')
+    ] %}
+    <div class="col-4">
+      <div class="card h-100 p-3">
+        <div class="d-flex align-items-center gap-3">
+          <div style="width:52px;height:52px;border-radius:14px;background:{{ color }}18;color:{{ color }};display:flex;align-items:center;justify-content:center;font-size:1.5rem;">
+            <i class="bi bi-{{ icon }}"></i>
+          </div>
+          <div>
+            <div style="font-size:1.5rem;font-weight:800;color:{{ color }};font-family:Outfit,sans-serif;line-height:1;">{{ val }}</div>
+            <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">{{ label }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-lg-5">
+      <div class="card h-100 p-4 text-center" style="background:linear-gradient(135deg,#4f46e5,#3730a3);border:none;color:#fff;">
+        <i class="bi bi-search" style="font-size:4rem;color:#c7d2fe;"></i>
+        <h4 style="font-family:Outfit,sans-serif;font-weight:800;margin-top:1rem;">Find Your Dream Job!</h4>
+        <p style="opacity:.85;">Enter your skills and instantly get matching jobs, roadmap and free resources!</p>
+        <a href="{{ url_for('find_jobs') }}" class="btn btn-light btn-lg rounded-pill mt-2 px-4 fw-bold" style="color:#4f46e5;">
+          <i class="bi bi-search me-2"></i>Find Jobs Now
+        </a>
+        <a href="{{ url_for('browse') }}" class="btn btn-outline-light rounded-pill mt-2 px-4">
+          <i class="bi bi-grid me-2"></i>Browse All Jobs
+        </a>
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <div class="card h-100">
+        <div class="card-header border-0 pt-3 pb-0">
+          <h5 style="font-weight:700;margin:0;"><i class="bi bi-person-circle me-2" style="color:var(--primary);"></i>My Profile</h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            {% for label, val in [('Name',user.name),('Email',user.email),('College',user.college or '—'),('Degree',user.degree or '—'),('Year',user.year or '—'),('Joined',user.created_at[:10])] %}
+            <div class="col-6">
+              <div class="p-3 rounded-3" style="background:var(--bg);">
+                <div style="color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;">{{ label }}</div>
+                <div class="fw-semibold" style="font-size:.88rem;">{{ val }}</div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="d-flex gap-2 mt-3">
+            <a href="{{ url_for('profile') }}" class="btn btn-sm btn-outline-primary rounded-pill"><i class="bi bi-pencil me-1"></i>Edit Profile</a>
+            <a href="{{ url_for('history') }}" class="btn btn-sm btn-outline-secondary rounded-pill"><i class="bi bi-clock-history me-1"></i>History</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Searches -->
+  <div class="card">
+    <div class="card-header border-0 pt-3 pb-0 d-flex justify-content-between align-items-center">
+      <h5 style="font-weight:700;margin:0;"><i class="bi bi-clock-history me-2" style="color:var(--primary);"></i>Recent Searches</h5>
+      <a href="{{ url_for('history') }}" class="btn btn-sm btn-outline-primary rounded-pill">View All</a>
+    </div>
+    <div class="card-body p-0">
+      {% if history %}
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead><tr><th>#</th><th>Skills</th><th>Top Match</th><th>Jobs Found</th><th>Date</th></tr></thead>
+          <tbody>
+            {% for h in history %}
+            <tr>
+              <td><code>#{{ h.id }}</code></td>
+              <td>{% for s in h.skills.split(',')[:3] %}<span class="skill-tag">{{ s.strip() }}</span>{% endfor %}</td>
+              <td><span class="badge rounded-pill" style="background:rgba(79,70,229,.1);color:var(--primary);">{{ h.top_job }}</span></td>
+              <td><span class="badge bg-success rounded-pill">{{ h.jobs_count }} jobs</span></td>
+              <td><small style="color:var(--muted);">{{ h.date[:10] }}</small></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="text-center py-5" style="color:var(--muted);">
+        <i class="bi bi-search" style="font-size:3rem;"></i>
+        <p class="mt-2">No searches yet!</p>
+        <a href="{{ url_for('find_jobs') }}" class="btn btn-main rounded-pill px-4"><i class="bi bi-search me-1"></i>Find Jobs Now</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+<!-- Prompt: Create a browse all jobs page with category filter buttons at top
+     and job cards in grid layout showing title, category, description, salary,
+     required skills and a view details button for each job. -->
+{% extends "base.html" %}
+{% block title %}Browse Jobs – CareerAI{% endblock %}
+{% block content %}
+<div class="page-hero">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div>
+      <h1><i class="bi bi-grid me-2"></i>Browse All Jobs</h1>
+      <p>{{ jobs|length }} job roles available</p>
+    </div>
+    <a href="{{ url_for('find_jobs') }}" class="btn btn-light rounded-pill px-4 fw-bold" style="color:#4f46e5;">
+      <i class="bi bi-search me-1"></i>Match My Skills
+    </a>
+  </div>
+</div>
+<div class="container pb-5">
+  <!-- Category Filter -->
+  <div class="d-flex flex-wrap gap-2 mb-4">
+    {% for cat in categories %}
+    <a href="{{ url_for('browse', category=cat) }}"
+       class="btn btn-sm rounded-pill {% if selected==cat %}btn-main{% else %}btn-outline-secondary{% endif %}">
+      {{ cat }}
+    </a>
+    {% endfor %}
+  </div>
+  <div class="row g-3">
+    {% for job in jobs %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 p-3">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div>
+            <h6 class="fw-bold mb-0" style="font-family:Outfit,sans-serif;">{{ job.title }}</h6>
+            <small style="color:var(--muted);">{{ job.category }}</small>
+          </div>
+          <span class="badge rounded-pill bg-success">{{ job.experience }}</span>
+        </div>
+        <p style="color:var(--muted);font-size:.83rem;margin:.4rem 0;">{{ job.description }}</p>
+        <div class="mt-auto">
+          <div style="color:var(--success);font-weight:700;font-size:.88rem;margin-bottom:.5rem;">
+            <i class="bi bi-currency-rupee"></i>{{ job.salary }}
+          </div>
+          <div class="mb-2">
+            {% for s in job.skills_required %}
+            <span class="skill-tag" style="font-size:.75rem;">{{ s }}</span>
+            {% endfor %}
+          </div>
+          <a href="{{ url_for('job_detail', job_title=job.title) }}" class="btn btn-sm btn-main w-100 rounded-3">
+            <i class="bi bi-eye me-1"></i>View Details & Roadmap
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
