@@ -6,16 +6,21 @@
 
 import json, os
 from datetime import datetime
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "data")
 
-DATA_DIR = "data"
 os.makedirs(DATA_DIR, exist_ok=True)
 
 USERS_FILE   = os.path.join(DATA_DIR, "users.json")
 HISTORY_FILE = os.path.join(DATA_DIR, "history.json")
-
 def _read(f):
-    if not os.path.exists(f): return {}
-    with open(f) as fp: return json.load(fp)
+    if not os.path.exists(f):
+        return {}
+    try:
+        with open(f) as fp:
+            return json.load(fp)
+    except:
+        return {}
 
 def _write(f, d):
     with open(f, "w") as fp: json.dump(d, fp, indent=2)
