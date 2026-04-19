@@ -1,0 +1,47 @@
+{
+  "nirnayamula@gmail.com": {
+    "name": "Nirnaya",
+    "email": "nirnayamula@gmail.com",
+    "password": "123456",
+    "college": "nirnayareddy25@gmail.com",
+    "degree": "B.Tech / B.E",
+    "year": "3rd Year",
+    "created_at": "2026-03-26 12:44:21"
+  },
+  "reddysannitha59@gmail.com": {
+    "name": "MULA SANNITHA",
+    "email": "reddysannitha59@gmail.com",
+    "password": "789456",
+    "college": "sr university",
+    "degree": "B.Tech / B.E",
+    "year": "1st Year",
+    "created_at": "2026-03-26 22:02:31"
+  },
+  "reddysannitha@gmail.com": {
+    "name": "MULA SANNITHA",
+    "email": "reddysannitha@gmail.com",
+    "password": "123456",
+    "college": "sr university",
+    "degree": "B.Tech / B.E",
+    "year": "3rd Year",
+    "created_at": "2026-03-30 09:53:52"
+  },
+  "reddy@gmail.com": {
+    "name": "MULA SANNITHA",
+    "email": "reddy@gmail.com",
+    "password": "123456",
+    "college": "sr university",
+    "degree": "B.Tech / B.E",
+    "year": "4th Year",
+    "created_at": "2026-04-01 09:20:03"
+  },
+  "nirnaya@gmail.com": {
+    "name": "Nirnaya Reddy",
+    "email": "nirnaya@gmail.com",
+    "password": "123456",
+    "college": "sr university",
+    "degree": "B.Tech / B.E",
+    "year": "4th Year",
+    "created_at": "2026-04-01 09:20:49"
+  }
+}

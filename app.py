@@ -1,8 +1,7 @@
-# Prompt: Create a Flask application called CareerAI with routes for home,
-# register, login, logout, dashboard, find-jobs with POST for skill matching,
+# Create a Flask application called CareerAI with routes for home,
+# register, login, logout, dashboard, find jobs with POST for skill matching,
 # browse all jobs with category filter, job detail page, history and profile
 # update page. Use session for login management and login_required decorator
-# to protect pages. No API key needed.
 
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from functools import wraps
@@ -148,4 +147,17 @@ def profile():
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=False)
+    app.run(host="127.0.0.1", port=port, debug=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
